@@ -12,7 +12,12 @@ export default function retextSentenceSpacing() {
           is(child, "WhiteSpaceNode") &&
           is(children[index + 1], "SentenceNode")
         ) {
-          console.log(child);
+          if (child.value.length !== 1) {
+            file.message(
+              "Expected 1 space between sentences, not " + child.value.length,
+              child
+            );
+          }
         }
       });
     });
