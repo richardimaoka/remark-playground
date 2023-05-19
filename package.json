@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/richardimaoka/remark-playground/issues"
   },
-  "homepage": "https://github.com/richardimaoka/remark-playground#readme"
+  "homepage": "https://github.com/richardimaoka/remark-playground#readme",
+  "dependencies": {
+    "rehype-react": "^7.2.0"
+  }
 }
