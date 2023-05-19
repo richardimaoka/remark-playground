@@ -1,27 +1,19 @@
-import { createElement, Fragment, useEffect, useState } from "react";
+import { read } from "to-vfile";
+import { reporter } from "vfile-reporter";
 import { unified } from "unified";
-import rehypeParse from "rehype-parse";
-import rehypeReact from "rehype-react";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import rehypeDocument from "rehype-document";
+import rehypeFormat from "rehype-format";
+import rehypeStringify from "rehype-stringify";
 
-const text = `<h2>Hello, world!</h2>
-<p>Welcome to my page 👀</p>`;
+const file = await unified()
+  .use(remarkParse)
+  .use(remarkRehype)
+  .use(rehypeDocument)
+  .use(rehypeFormat)
+  .use(rehypeStringify)
+  .process(await read("example.md"));
 
-function useProcessor(text) {
-  const [Content, setContent] = useState(Fragment);
-
-  useEffect(() => {
-    unified()
-      .use(rehypeParse, { fragment: true })
-      .use(rehypeReact, { createElement, Fragment })
-      .process(text)
-      .then((file) => {
-        setContent(file.result);
-      });
-  }, [text]);
-
-  return Content;
-}
-
-export default function App() {
-  return useProcessor(text);
-}
+console.error(reporter(file));
+console.log(String(file));
